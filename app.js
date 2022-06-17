@@ -3,7 +3,8 @@ require("./config/database").connect();
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const qrcode = require("qrcode");
+const QR = require("qrcode");
+const QRCode = require('./model/qrCode')
 
 const app = express();
 
@@ -132,7 +133,7 @@ app.post("/qr/generate", async (req, res) => {
   
         // Generate encrypted data
         const encryptedData = jwt.sign(
-            { userId: user._id, email },
+            { userId: user._id, email: user.email },
             process.env.TOKEN_KEY,
             {
             expiresIn: "1d",
